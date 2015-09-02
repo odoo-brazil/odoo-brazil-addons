@@ -1,4 +1,4 @@
-L10bn Br Zip Correios
+L10n Br Zip Correios
 ================
 
 ## About
@@ -7,7 +7,7 @@ inserted by user and fill address fields with the returned data.
 It provide this search button on view of partners and view of companies.
 
 ## Dependences
-**l10n_cr_zip_correios** makes use of external python libraries to perform their search routines:
+This module makes use of external python libraries to perform their search routines:
 
 * suds:  
 ```
