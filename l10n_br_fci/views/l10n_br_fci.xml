@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_l10n_br_fci_tree" model="ir.ui.view">
+            <field name="name">l10n_br_fci.tree</field>
+            <field name="model">l10n_br.fci</field>
+            <field name="arch" type="xml">
+                <tree string="FCI_Empresa">
+                    <field name="state" invisible="1"/>
+                    <field name="company_id"/>
+                    <field name="hash_code"/>
+                    <field name="dt_recepcao"/>
+                    <field name="dt_validacao"/>
+                    <field name="in_validacao"/>
+                    <field name="cod_recepcao"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_l10n_br_fci_form" model="ir.ui.view">
+            <field name="name">l10n_br_fci.form</field>
+            <field name="model">l10n_br.fci</field>
+            <field name="arch" type="xml">
+                <form string="FCI_Empresa">
+                    <field name="state" invisible="1"/>
+                    <header>
+
+                        <button name="action_create_fci"
+                                string="Confirmar"
+                                states="draft"
+                                type="object"
+                                class="oe_highlight"
+                                groups="base.group_user">
+                        </button>
+                        <button name="action_waiting_fci"
+                                string="Validar Protocolo"
+                                states="waiting_protocol"
+                                class="oe_highlight"
+                                position="before"
+                                type="object">
+                        </button>
+                        <button name="import_fci"
+                                string="Importar FCI"
+                                type="object"
+                                states="waiting_fci"
+                                class="oe_highlight"
+                                groups="base.group_user">
+                        </button>
+                        <button name="action_cancel"
+                                states="waiting_protocol,waiting_fci,create_fci"
+                                string="Cancelar"
+                                type="object"
+                                position="after">
+                        </button>
+                        <field name="state" select="1" readonly="1"
+                               widget="statusbar"
+                               statusbar_visible="draft,
+                                   waiting_protocol, waiting_fci, aproved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_right oe_button_box"
+                             name="import_buttons">
+                            <button class="oe_inline oe_stat_button"
+                                    name="%(action_view_l10n_br_fci_lines)d"
+                                    string="Produtos"
+                                    type="action"
+                                    widget="statinfo" states="draft"
+                                    icon="fa-search"
+                                    position="inside"/>
+                        </div>
+                        <group>
+                            <group string="Remessa">
+                                <field name="create_date"/>
+                                <field name="company_id"/>
+                                <field name="protocol_number"/>
+                            </group>
+                            <group string="Retorno">
+                                <field name="cod_recepcao"/>
+                                <field name="dt_validacao"/>
+                                <field name="dt_recepcao"/>
+                            </group>
+                        </group>
+                        <field name="fci_line">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="default_code"
+                                       invisible="1"/>
+                                <field name="name" invisible="1"/>
+                                <field name="ean13" invisible="1"/>
+                                <field name="product_uom"/>
+                                <field name="ncm_id"/>
+                                <field name="list_price"/>
+                                <field name="valor_parcela_importada"/>
+                                <field name="conteudo_importacao"/>
+                                <field name="fci"/>
+                            </tree>
+                        </field>
+                        <group>
+                            <field name="fci_file_sent" filename="file_name" states="waiting_protocol,aproved"/>/>
+                            <field name="fci_file_returned" states="waiting_fci,aproved"/>
+                            <field name="hash_code" states="aproved"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_l10n_br_fci">
+            <field name="name">FCI</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">l10n_br.fci</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_l10n_br_fci_tree"/>
+        </record>
+
+        <record id="sequence_fci_type" model="ir.sequence.type">
+            <field name="name">FCI number</field>
+            <field name="code">fci.sequence</field>
+        </record>
+
+        <record id="sequence_fci" model="ir.sequence">
+            <field name="name">FCI number</field>
+            <field name="code">fci.sequence</field>
+            <field name="prefix">FCI/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <menuitem name="FCI" id="menu_action_l10n_br_fci_form" parent="l10n_br_account.menu_l10n_br_account_configuration" action="action_l10n_br_fci" sequence="6"/>
+
+    </data>
+</openerp>
