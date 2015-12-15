@@ -37,7 +37,7 @@ class ProductProduct(models.Model):
     """Personalization to allow different ncm's in product variants"""
     _inherit = "product.product"
 
-    ncm_id = fields.Many2one('account.product.fiscal.classification', u'NCM')
+    fiscal_classification_id = fields.Many2one('account.product.fiscal.classification', u'NCM')
     categ_id = fields.Many2one('product.category','Internal Category',
         required=True, change_default=True, domain="[('type','=','normal')]",
         help="Select category for the current product")
