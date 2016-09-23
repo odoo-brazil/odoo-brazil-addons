@@ -12,4 +12,5 @@ Módulo | Desenvolvimento
 ------------ | -------------
 Geração de Ficha de Conteúdo de Importação | Kmee
 Múltiplos NCMs por produto | Kmee
+Busca de CEP e endereço usando o site ViaCEP | TrustCode
 
